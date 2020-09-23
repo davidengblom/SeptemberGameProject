@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
-    public float moveSpeed = 5f;
+    [Header("Componenets")]
+    [Tooltip("The indicator that the player is constantly moving towards.")] public Transform movePoint;
 
-    public Transform movePoint;
+    [Header("Variables")]
+    [Tooltip("The speed at which the player moves.")] public float moveSpeed = 5f;
 
-    public LayerMask ground;
+    private LayerMask ground;
 
-    public bool canWalkX;
-    public bool canWalkZ;
+    private bool canWalkX; //Checks if there is ground to the left/right of the player
+    private bool canWalkZ; //Check if there is ground in front of/behind the player
 
     private void Start()
     {
@@ -23,6 +25,7 @@ public class CharacterMovement : MonoBehaviour
     {
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
     }
+
     private void Update()
     {
         canWalkX = Physics.CheckSphere(movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal"), -0.75f, 0f), .2f, ground);
@@ -34,6 +37,7 @@ public class CharacterMovement : MonoBehaviour
             {
                 if (canWalkX)
                 {
+                    
                     movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
                 }
 
