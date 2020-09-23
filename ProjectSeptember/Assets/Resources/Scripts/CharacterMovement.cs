@@ -24,19 +24,15 @@ public class CharacterMovement : MonoBehaviour
 
         if(Vector3.Distance(transform.position, movePoint.position) <= .05f)
         {
-            if(Physics.OverlapSphere(movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f), .2f, ground).Length > 0) //Fix collision detection
+            if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1)
             {
-                if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1)
-                {
-                    movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
-                }
-
-                if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1)
-                {
-                    movePoint.position += new Vector3(0f, 0f, Input.GetAxisRaw("Vertical"));
-                }
+                movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
             }
 
+            if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1)
+            {
+                movePoint.position += new Vector3(0f, 0f, Input.GetAxisRaw("Vertical"));
+            }
         }
     }
 
