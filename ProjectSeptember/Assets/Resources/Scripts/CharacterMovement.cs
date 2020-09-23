@@ -10,9 +10,13 @@ public class CharacterMovement : MonoBehaviour
 
     public LayerMask ground;
 
+    public bool canWalkX;
+    public bool canWalkZ;
+
     private void Start()
     {
         movePoint.parent = null;
+        ground = LayerMask.GetMask("Ground");
     }
 
     private void FixedUpdate()
@@ -21,18 +25,28 @@ public class CharacterMovement : MonoBehaviour
     }
     private void Update()
     {
+        canWalkX = Physics.CheckSphere(movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal"), -0.75f, 0f), .2f, ground);
+        canWalkZ = Physics.CheckSphere(movePoint.position + new Vector3(0f, -0.75f, Input.GetAxisRaw("Vertical")), .2f, ground);
 
-        if(Vector3.Distance(transform.position, movePoint.position) <= .05f)
+        if (Vector3.Distance(transform.position, movePoint.position) <= .05f)
         {
             if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1)
             {
-                movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
+                if (canWalkX)
+                {
+                    movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
+                }
+
+            }
+            else if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1)
+            {
+                if (canWalkZ)
+                {
+                    movePoint.position += new Vector3(0f, 0f, Input.GetAxisRaw("Vertical"));
+                }
             }
 
-            if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1)
-            {
-                movePoint.position += new Vector3(0f, 0f, Input.GetAxisRaw("Vertical"));
-            }
+
         }
     }
 
