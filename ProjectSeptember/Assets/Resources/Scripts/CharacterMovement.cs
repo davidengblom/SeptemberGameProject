@@ -4,17 +4,24 @@ using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
-    [Header("Componenets")]
-    [Tooltip("The indicator that the player is constantly moving towards.")] public Transform movePoint;
+    [Header("Components")]
+    [Tooltip("The indicator that the player is constantly moving towards.")]
+    public Transform movePoint;
 
     [Header("Variables")]
-    [Tooltip("The speed at which the player moves.")] public float moveSpeed = 5f;
+    [Tooltip("The speed at which the player moves.")]
+    public float moveSpeed = 5f;
 
     private LayerMask ground;
     private LayerMask stairs;
 
     private bool canWalkX; //Checks if there is ground to the left/right of the player
     private bool canWalkZ; //Check if there is ground in front of/behind the player
+
+    private Collider[] interactableRight;
+    private Collider[] interactableLeft;
+    private Collider[] interactableUp;
+    private Collider[] interactableDown;
 
     private bool canWalkStairX; //Checks if there are stairs to the left/right of the player
     private bool canWalkStairZ; //Checks if there are stairs in front of/behind the player
@@ -28,7 +35,10 @@ public class CharacterMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
+        if (transform.position != movePoint.position)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
+        }
     }
 
     private void Update()
@@ -42,6 +52,40 @@ public class CharacterMovement : MonoBehaviour
         Collider[] stairsX = Physics.OverlapSphere(movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal"), -0.75f, 0f), 0.2f, stairs);
         Collider[] stairsZ = Physics.OverlapSphere(movePoint.position + new Vector3(0f, -0.75f, Input.GetAxisRaw("Vertical")), 0.2f, stairs);
 
+        interactableRight = Physics.OverlapSphere(transform.position + new Vector3(1f, 0f, 0f), 0.2f, stairs); //Change the stair layer to include all interactables
+        interactableLeft = Physics.OverlapSphere(transform.position + new Vector3(-1f, 0f, 0f), 0.2f, stairs);
+        interactableUp = Physics.OverlapSphere(transform.position + new Vector3(0f, 0f, 1f), 0.2f, stairs);
+        interactableDown = Physics.OverlapSphere(transform.position + new Vector3(0f, 0f, -1f), 0.2f, stairs);
+
+        if(interactableRight.Length > 0)
+        {
+            if(Input.GetKeyDown(KeyCode.E))
+            {
+                interactableRight[0].GetComponent<MoveableMovement>().isControlled = true;
+            }
+        }
+        else if(interactableLeft.Length > 0)
+        {
+            if(Input.GetKeyDown(KeyCode.E))
+            {
+                interactableLeft[0].GetComponent<MoveableMovement>().isControlled = true;
+            }
+        }
+        else if(interactableUp.Length > 0)
+        {
+            if(Input.GetKeyDown(KeyCode.E))
+            {
+                interactableUp[0].GetComponent<MoveableMovement>().isControlled = true;
+            }
+        }
+        else if(interactableDown.Length > 0)
+        {
+            if(Input.GetKeyDown(KeyCode.E))
+            {
+                interactableDown[0].GetComponent<MoveableMovement>().isControlled = true;
+            }
+        }
+
 
         if (Vector3.Distance(transform.position, movePoint.position) <= .05f)
         {
@@ -53,13 +97,16 @@ public class CharacterMovement : MonoBehaviour
                 }
                 else if (canWalkStairX)
                 {
-                    if (transform.position.y - 0.25f == stairsX[0].transform.position.y)
+                    if(stairsX[0].GetComponent<MoveableMovement>().groundRight.Length > 0 || stairsX[0].GetComponent<MoveableMovement>().groundLeft.Length > 0)
                     {
-                        movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal") + 1f, 1f, 0f); //Move Upstairs
-                    }
-                    else
-                    {
-                        movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal")-1f, -1f, 0f); //Move Downstairs
+                        if (transform.position.y - 0.25f == stairsX[0].transform.position.y)
+                        {
+                            movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal") + 1f, 1f, 0f); //Move Upstairs
+                        }
+                        else
+                        {
+                            movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal") - 1f, -1f, 0f); //Move Downstairs
+                        }
                     }
                 }
             }
@@ -71,13 +118,16 @@ public class CharacterMovement : MonoBehaviour
                 }
                 else if (canWalkStairZ)
                 {
-                    if (transform.position.y - 0.25f == stairsZ[0].transform.position.y)
+                    if(stairsZ[0].GetComponent<MoveableMovement>().groundUp.Length > 0 || stairsZ[0].GetComponent<MoveableMovement>().groundDown.Length > 0)
                     {
-                        movePoint.position += new Vector3(0f, 1f, Input.GetAxisRaw("Vertical") + 1f); //Move Upstairs
-                    }
-                    else
-                    {
-                        movePoint.position += new Vector3(0f, -1f, Input.GetAxisRaw("Vertical") - 1f); //Move Downstairs
+                        if (transform.position.y - 0.25f == stairsZ[0].transform.position.y)
+                        {
+                            movePoint.position += new Vector3(0f, 1f, Input.GetAxisRaw("Vertical") + 1f); //Move Upstairs
+                        }
+                        else
+                        {
+                            movePoint.position += new Vector3(0f, -1f, Input.GetAxisRaw("Vertical") - 1f); //Move Downstairs
+                        }
                     }
                 }
             }
