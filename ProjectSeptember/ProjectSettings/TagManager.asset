@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Stairs
   - Moveable
+  - Box
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - 
   - 
   - Ground
-  - Wall
+  - Walls
   - Stairs
   - Moveable
   - 

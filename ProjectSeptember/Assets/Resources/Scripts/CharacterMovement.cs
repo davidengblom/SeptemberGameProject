@@ -12,13 +12,18 @@ public class CharacterMovement : MonoBehaviour
     [Tooltip("The speed at which the player moves.")]
     public float moveSpeed = 5f;
 
+    [Header("Keybinds")]
+    [Tooltip("Key to be pressed to interact with objects.")]
+    [SerializeField]
+    private KeyCode interactKey = KeyCode.E;
+
     private LayerMask ground;
     private LayerMask stairs;
 
     private bool canWalkX; //Checks if there is ground to the left/right of the player
     private bool canWalkZ; //Check if there is ground in front of/behind the player
 
-    private Collider[] interactableRight;
+    private Collider[] interactableRight; //Check if there is an interactable in range of the player (Right, Left, Front, Back)
     private Collider[] interactableLeft;
     private Collider[] interactableUp;
     private Collider[] interactableDown;
@@ -41,6 +46,24 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider obj)
+    {
+        if (obj.gameObject.CompareTag("Box"))
+        {
+            transform.position += new Vector3(0f, 0.5f, 0f);
+            movePoint.position += new Vector3(0f, 0.5f, 0f);
+        }
+    }
+
+    private void OnTriggerExit(Collider obj)
+    {
+        if(obj.gameObject.CompareTag("Box"))
+        {
+            transform.position += new Vector3(0f, -0.5f, 0f);
+            movePoint.position += new Vector3(0f, -0.5f, 0f);
+        }
+    }
+
     private void Update()
     {
         canWalkX = Physics.CheckSphere(movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal"), -0.75f, 0f), 0.2f, ground);
@@ -59,28 +82,28 @@ public class CharacterMovement : MonoBehaviour
 
         if(interactableRight.Length > 0)
         {
-            if(Input.GetKeyDown(KeyCode.E))
+            if(Input.GetKeyDown(interactKey))
             {
                 interactableRight[0].GetComponent<MoveableMovement>().isControlled = true;
             }
         }
         else if(interactableLeft.Length > 0)
         {
-            if(Input.GetKeyDown(KeyCode.E))
+            if(Input.GetKeyDown(interactKey))
             {
                 interactableLeft[0].GetComponent<MoveableMovement>().isControlled = true;
             }
         }
         else if(interactableUp.Length > 0)
         {
-            if(Input.GetKeyDown(KeyCode.E))
+            if(Input.GetKeyDown(interactKey))
             {
                 interactableUp[0].GetComponent<MoveableMovement>().isControlled = true;
             }
         }
         else if(interactableDown.Length > 0)
         {
-            if(Input.GetKeyDown(KeyCode.E))
+            if(Input.GetKeyDown(interactKey))
             {
                 interactableDown[0].GetComponent<MoveableMovement>().isControlled = true;
             }

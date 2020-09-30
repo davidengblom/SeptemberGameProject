@@ -58,7 +58,7 @@ public class MoveableMovement : MonoBehaviour
         groundLeft = Physics.OverlapSphere(transform.position + new Vector3(-1f, 0.75f, 0), 0.2f, ground);
         groundUp = Physics.OverlapSphere(transform.position + new Vector3(0f, 0.75f, 1f), 0.2f, ground);
         groundDown = Physics.OverlapSphere(transform.position + new Vector3(0f, 0.75f, -1f), 0.2f, ground);
-
+        
         if(isControlled)
         {
             playerMovement.enabled = false;
