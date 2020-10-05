@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: a0a2378f58d640f41a1d7abd3f33055e
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _Albedo: {fileID: 2800000, guid: 9602eeacfd396094db5fef473d65b575, type: 3}
+  - _FogColor_Map: {instanceID: 0}
+  - _texcoord: {fileID: 2800000, guid: 2e352f2bda553564bb7216182d08f359, type: 3}
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
