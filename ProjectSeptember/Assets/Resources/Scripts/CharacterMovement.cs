@@ -120,7 +120,7 @@ public class CharacterMovement : MonoBehaviour
                 }
                 else if (canWalkStairX)
                 {
-                    if(stairsX[0].GetComponent<MoveableMovement>().groundRight.Length > 0 || stairsX[0].GetComponent<MoveableMovement>().groundLeft.Length > 0)
+                    if(stairsX[0].GetComponent<MoveableMovement>().groundRight.Length > 0)
                     {
                         if (transform.position.y - 0.25f == stairsX[0].transform.position.y)
                         {
@@ -129,6 +129,17 @@ public class CharacterMovement : MonoBehaviour
                         else
                         {
                             movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal") - 1f, -1f, 0f); //Move Downstairs
+                        }
+                    }
+                    else if(stairsX[0].GetComponent<MoveableMovement>().groundLeft.Length > 0)
+                    {
+                        if (transform.position.y - 0.25f == stairsX[0].transform.position.y)
+                        {
+                            movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal") - 1f, 1f, 0f); //Move Upstairs
+                        }
+                        else
+                        {
+                            movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal") + 1f, -1f, 0f); //Move Downstairs
                         }
                     }
                 }
@@ -141,7 +152,7 @@ public class CharacterMovement : MonoBehaviour
                 }
                 else if (canWalkStairZ)
                 {
-                    if(stairsZ[0].GetComponent<MoveableMovement>().groundUp.Length > 0 || stairsZ[0].GetComponent<MoveableMovement>().groundDown.Length > 0)
+                    if(stairsZ[0].GetComponent<MoveableMovement>().groundUp.Length > 0)
                     {
                         if (transform.position.y - 0.25f == stairsZ[0].transform.position.y)
                         {
@@ -150,6 +161,17 @@ public class CharacterMovement : MonoBehaviour
                         else
                         {
                             movePoint.position += new Vector3(0f, -1f, Input.GetAxisRaw("Vertical") - 1f); //Move Downstairs
+                        }
+                    }
+                    else if(stairsZ[0].GetComponent<MoveableMovement>().groundDown.Length > 0)
+                    {
+                        if (transform.position.y - 0.25f == stairsZ[0].transform.position.y)
+                        {
+                            movePoint.position += new Vector3(0f, 1f, Input.GetAxisRaw("Vertical") - 1f); //Move Upstairs
+                        }
+                        else
+                        {
+                            movePoint.position += new Vector3(0f, -1f, Input.GetAxisRaw("Vertical") + 1f); //Move Downstairs
                         }
                     }
                 }
