@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3103257373430719247}
   - component: {fileID: 3103257373430719246}
   - component: {fileID: 3103257373430719241}
+  - component: {fileID: 7081531377572210780}
   m_Layer: 10
   m_Name: StairPiece
   m_TagString: Moveable
@@ -117,6 +118,20 @@ MonoBehaviour:
   groundLeft: []
   groundUp: []
   groundDown: []
+--- !u!114 &7081531377572210780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3103257373430719244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8102a1595f67d954ca286249be5a6cc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultMat: {fileID: 2100000, guid: 4a38ce022f5647f42ba370b47c908ebb, type: 2}
+  outlineMat: {fileID: 2100000, guid: de5432c1d4428744e9d3cf30fa856cb3, type: 2}
 --- !u!1 &3103257374223643957
 GameObject:
   m_ObjectHideFlags: 0

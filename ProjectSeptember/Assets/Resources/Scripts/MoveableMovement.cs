@@ -9,6 +9,7 @@ public class MoveableMovement : MonoBehaviour
     public Transform movePoint;
 
     public CharacterMovement playerMovement;
+    public Outliner outliner;
 
     [Header("Variables")]
     [Tooltip("The speed at which the player moves.")]
@@ -36,6 +37,7 @@ public class MoveableMovement : MonoBehaviour
         ground = LayerMask.GetMask("Ground");
 
         playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterMovement>();
+        outliner = GetComponent<Outliner>();
     }
 
     private void FixedUpdate()
@@ -61,6 +63,7 @@ public class MoveableMovement : MonoBehaviour
         
         if(isControlled)
         {
+            outliner.CreateOutline();
             playerMovement.enabled = false;
 
             if(Input.GetKeyDown(KeyCode.E))
@@ -95,6 +98,7 @@ public class MoveableMovement : MonoBehaviour
         else
         {
             playerMovement.enabled = true;
+            outliner.DeleteOutline();
         }
         
     }
