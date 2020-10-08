@@ -14,8 +14,7 @@ public class CharacterMovement : MonoBehaviour
 
     [Header("Keybinds")]
     [Tooltip("Key to be pressed to interact with objects.")]
-    [SerializeField]
-    private KeyCode interactKey = KeyCode.E;
+    public KeyCode interactKey = KeyCode.E;
 
     private LayerMask ground;
     private LayerMask stairs;

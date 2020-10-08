@@ -29,6 +29,8 @@ public class MoveableMovement : MonoBehaviour
     [HideInInspector] public Collider[] groundUp;
     [HideInInspector] public Collider[] groundDown;
 
+    [HideInInspector] public Collider[] currentGround;
+
     private void Start()
     {
         movePoint.parent = null;
@@ -60,16 +62,21 @@ public class MoveableMovement : MonoBehaviour
         groundLeft = Physics.OverlapSphere(transform.position + new Vector3(-1f, 0.75f, 0), 0.2f, ground);
         groundUp = Physics.OverlapSphere(transform.position + new Vector3(0f, 0.75f, 1f), 0.2f, ground);
         groundDown = Physics.OverlapSphere(transform.position + new Vector3(0f, 0.75f, -1f), 0.2f, ground);
+
+        currentGround = Physics.OverlapSphere(transform.position + new Vector3(0f, -0.75f, 0f), 0.2f, moveableLayer);
         
         if(isControlled)
         {
             outliner.CreateOutline();
             playerMovement.enabled = false;
 
-            if(Input.GetKeyDown(KeyCode.E))
+            if(Input.GetKeyDown(playerMovement.interactKey))
             {
-                playerMovement.enabled = true;
-                isControlled = false;
+                if(!currentGround[0].CompareTag("CantPlace"))
+                {
+                    playerMovement.enabled = true;
+                    isControlled = false;
+                }
             }
             if (Vector3.Distance(transform.position, movePoint.position) <= 0.05f)
             {
