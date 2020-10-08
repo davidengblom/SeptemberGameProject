@@ -2,11 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.UI;
 
 public class ObjectSpawnerWizard : ScriptableWizard
 {
     public GameObject objectToSpawn;
-    public Vector3 spawnCoordinates;
+    public int numberOfObjects;
+    private Transform spawnLocation;
+
+    private void Awake()
+    {
+        spawnLocation = GameObject.Find("SpawnLocation").transform;
+    }
 
     [MenuItem("Custom Tools/Object Spawner")]
     private static void CreateWizard()
@@ -16,6 +23,17 @@ public class ObjectSpawnerWizard : ScriptableWizard
 
     private void OnWizardCreate()
     {
-
+        if (numberOfObjects > 5f)
+        {
+            Debug.LogError("Please spawn fewer than 5 items at once.");
+        }
+        else
+        {
+            for (int i = 0; i < numberOfObjects; i++)
+            {
+                PrefabUtility.InstantiatePrefab(objectToSpawn);
+                objectToSpawn.transform.position = spawnLocation.position;
+            }
+        }
     }
 }
