@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4318458536952001919}
   - component: {fileID: 4318458536952001916}
   - component: {fileID: 4318458536952001890}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -112,6 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movePoint: {fileID: 4318458537073128132}
   moveSpeed: 5
+  interactKey: 101
 --- !u!1 &4318458537073128133
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,7 +122,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4318458537073128132}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: PlayerMovePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
